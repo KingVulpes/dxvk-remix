@@ -61,6 +61,10 @@ namespace dxvk {
     // NV-DXVK start: opacity micromap
     VkPhysicalDeviceSynchronization2FeaturesKHR               khrSynchronization2;
     // NV-DXVK end
+
+    // NV-DXVK start: AMD Anti-Lag
+    VkPhysicalDeviceAntiLagFeaturesAMD                        amdAntiLag;
+    // NV-DXVK end
   };
 
 }

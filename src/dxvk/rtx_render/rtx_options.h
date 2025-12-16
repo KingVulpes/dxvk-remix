@@ -143,6 +143,12 @@ namespace dxvk {
     LowLatencyBoost
   };
 
+  enum class AntiLagMode : int {
+    Off = 0,
+    On,
+    DriverControl
+  };
+
   enum class FusedWorldViewMode : int {
     None = 0,
     View,
@@ -949,6 +955,15 @@ namespace dxvk {
     RTX_OPTION_FLAG("rtx", bool, isReflexEnabled, true, RtxOptionFlags::NoSave,
                     "Enables or disables Reflex globally.\n"
                     "Note that this option when set to false will prevent Reflex from even attempting to initialize, unlike setting the Reflex mode to \"None\" which simply tells an initialized Reflex not to take effect.\n"
+                    "Additionally, this setting must be set at startup and changing it will not take effect at runtime.");
+
+    RTX_OPTION("rtx", AntiLagMode, antiLagMode, AntiLagMode::On,
+               "AMD Anti-Lag mode selection, enabling it helps minimize input latency on AMD GPUs.\n"
+               "Supported enum values are 0 = Off (Disabled), 1 = On (Enabled), 2 = DriverControl (Let driver decide).\n"
+               "Note that even when using the \"Off\" Anti-Lag mode, Anti-Lag will attempt to be initialized. Use rtx.isAntiLagEnabled to fully disable to skip this initialization if needed.");
+    RTX_OPTION_FLAG("rtx", bool, isAntiLagEnabled, true, RtxOptionFlags::NoSave,
+                    "Enables or disables AMD Anti-Lag globally.\n"
+                    "Note that this option when set to false will prevent Anti-Lag from even attempting to initialize, unlike setting the Anti-Lag mode to \"Off\" which simply tells an initialized Anti-Lag not to take effect.\n"
                     "Additionally, this setting must be set at startup and changing it will not take effect at runtime.");
 
     // Store the computed value separately from the user preference.  This enables changing it immediately when needed,

@@ -347,6 +347,10 @@ namespace dxvk {
     DxvkExt nvLowLatency                      = { "VK_NV_low_latency",                                      DxvkExtMode::Optional };
     // NV-DXVK end
 
+    // NV-DXVK start: Integrate AMD Anti-Lag
+    DxvkExt amdAntiLag                        = { VK_AMD_ANTI_LAG_EXTENSION_NAME,                           DxvkExtMode::Optional };
+    // NV-DXVK end
+
     // NV-DXVK start: RTXIO
     DxvkExt khrTimelineSemaphore              = { VK_KHR_TIMELINE_SEMAPHORE_EXTENSION_NAME,                 DxvkExtMode::Optional };
     // NV-DXVK end

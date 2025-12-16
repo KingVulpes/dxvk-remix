@@ -301,6 +301,8 @@ dxvk_src = files([
   'rtx_render/rtx_ray_reconstruction.h',
   'rtx_render/rtx_reflex.cpp',
   'rtx_render/rtx_reflex.h',
+  'rtx_render/rtx_antilag.cpp',
+  'rtx_render/rtx_antilag.h',
   'rtx_render/rtx_remix_api.cpp',
   'rtx_render/rtx_resources.cpp',
   'rtx_render/rtx_resources.h',

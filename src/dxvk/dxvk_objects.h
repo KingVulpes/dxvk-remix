@@ -55,6 +55,7 @@
 #include "rtx_render/rtx_initializer.h"
 #include "rtx_render/rtx_scene_manager.h"
 #include "rtx_render/rtx_reflex.h"
+#include "rtx_render/rtx_antilag.h"
 #include "rtx_render/rtx_game_capturer.h"
 #include "rtx_render/rtx_dust_particles.h"
 #include "rtx_render/rtx_particle_system.h"
@@ -266,6 +267,10 @@ namespace dxvk {
       return m_reflex.get(m_device);
     }
 
+    RtxAntiLag& metaAntiLag() {
+      return m_antilag.get(m_device);
+    }
+
     SceneManager& getSceneManager() {
       return m_sceneManager;
     }
@@ -380,6 +385,7 @@ namespace dxvk {
     Active<DxvkToneMapping>                 m_toneMapping;
     Active<DxvkLocalToneMapping>            m_localToneMapping;
     Active<DxvkBloom>                       m_bloom;
+    Lazy<RtxAntiLag>                        m_antilag;
     Active<RtxGeometryUtils>                m_geometryUtils;
     Active<RtxImageUtils>                   m_imageUtils;
     Active<DxvkPostFx>                      m_postFx;

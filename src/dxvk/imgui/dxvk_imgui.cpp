@@ -453,6 +453,15 @@ namespace dxvk {
     } }
   };
 
+  ImGui::ComboWithKey<AntiLagMode> antiLagModeCombo{
+    "AMD Anti-Lag",
+    ImGui::ComboWithKey<AntiLagMode>::ComboEntries{ {
+        {AntiLagMode::Off, "Off"},
+        {AntiLagMode::On, "On"},
+        {AntiLagMode::DriverControl, "Driver Control"},
+    } }
+  };
+
 #ifdef REMIX_DEVELOPMENT
   ImGui::ComboWithKey<dxvk::RtxFramePassStage>::ComboEntries aliasingPassComboEntries = { {
       { RtxFramePassStage::FrameBegin, "FrameBegin" },
@@ -3379,6 +3388,7 @@ namespace dxvk {
 
   void ImGUI::showReflexOptions(const Rc<DxvkContext>& ctx, bool displayStatsWindowToggle) {
     RtxReflex& reflex = m_device->getCommon()->metaReflex();
+    RtxAntiLag& antiLag = m_device->getCommon()->metaAntiLag();
 
     // Note: Skip Reflex ImGUI options if Reflex is not initialized (either fully disabled or failed to be initialized).
     if (!reflex.reflexInitialized()) {
@@ -3392,6 +3402,11 @@ namespace dxvk {
       ImGui::BeginDisabled(disableReflexUI);
       m_userGraphicsSettingChanged |= reflexModeCombo.getKey(&RtxOptions::reflexModeObject());
       ImGui::EndDisabled();
+    }
+
+    // Display AMD Anti-Lag mode selector (if initialized)
+    if (antiLag.antiLagInitialized()) {
+      m_userGraphicsSettingChanged |= antiLagModeCombo.getKey(&RtxOptions::antiLagModeObject());
     }
 
     // Add a button to toggle the Reflex latency stats Window if requested

@@ -193,6 +193,10 @@ namespace dxvk {
           // Note: Only insert Reflex Present markers around the Presenter's present call if requested.
           if (insertReflexPresentMarkers) {
             reflex.beginPresentation(cachedReflexFrameId);
+            
+            // AMD Anti-Lag: Update before presentation
+            const auto& antiLag = m_device->getCommon()->metaAntiLag();
+            antiLag.updateBeforePresent(cachedReflexFrameId);
           }
           // NV-DXVK end
 

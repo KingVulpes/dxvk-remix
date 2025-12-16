@@ -538,9 +538,13 @@ namespace dxvk {
       // Signal Reflex rendering start
 
       RtxReflex& reflex = m_common->metaReflex();
+      RtxAntiLag& antiLag = m_common->metaAntiLag();
 
       // Note: Update the Reflex mode in case the option has changed.
       reflex.updateMode();
+      
+      // Note: Update the Anti-Lag mode in case the option has changed.
+      antiLag.updateMode();
 
       m_submitContainsInjectRtx = true;
       m_cachedReflexFrameId = cachedReflexFrameId;

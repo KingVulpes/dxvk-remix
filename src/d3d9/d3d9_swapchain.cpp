@@ -1118,6 +1118,7 @@ namespace dxvk {
 
     // NV-DXVK start: Reflex integration
     auto& reflex = m_device->getCommon()->metaReflex();
+    auto& antiLag = m_device->getCommon()->metaAntiLag();
     auto& d3d9Rtx = m_parent->m_rtx;
 
     // Note: Set the latency ping thread to this thread. This is not a great place to do this as this will be called every present, but this operation
@@ -1227,6 +1228,9 @@ namespace dxvk {
     // on the main thread after the Reflex sleep has completed to encompass this region.
     reflex.beginSimulation(d3d9Rtx.GetReflexFrameId());
     reflex.latencyPing(d3d9Rtx.GetReflexFrameId());
+
+    // AMD Anti-Lag: Update before input processing (at the start of the next frame)
+    antiLag.updateBeforeInput(d3d9Rtx.GetReflexFrameId());
 
     // Tell tracy its the end of the frame
     FrameMark;

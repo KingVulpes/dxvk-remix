@@ -343,7 +343,7 @@ namespace dxvk {
           DxvkDeviceFeatures  enabledFeatures) {
     DxvkDeviceExtensions devExtensions;
 
-    std::array<DxvkExt*, 43> devExtensionList = {{
+    std::array<DxvkExt*, 44> devExtensionList = {{
       &devExtensions.amdMemoryOverallocationBehaviour,
       &devExtensions.amdShaderFragmentMask,
       &devExtensions.ext4444Formats,
@@ -383,6 +383,7 @@ namespace dxvk {
       &devExtensions.khrSynchronization2,
       &devExtensions.extOpacityMicromap,
       &devExtensions.nvLowLatency,
+      &devExtensions.amdAntiLag,
       &devExtensions.nvxBinaryImport,
       &devExtensions.nvxImageViewHandle,
       &devExtensions.khrExternalMemory,
@@ -611,6 +612,14 @@ namespace dxvk {
       enabledFeatures.khrSynchronization2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR;
       enabledFeatures.khrSynchronization2.pNext = std::exchange(enabledFeatures.core.pNext, &enabledFeatures.khrSynchronization2);
       enabledFeatures.khrSynchronization2.synchronization2 = VK_TRUE;
+    }
+    // NV-DXVK end
+
+    // NV-DXVK start: AMD Anti-Lag
+    if (devExtensions.amdAntiLag) {
+      enabledFeatures.amdAntiLag.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD;
+      enabledFeatures.amdAntiLag.pNext = std::exchange(enabledFeatures.core.pNext, &enabledFeatures.amdAntiLag);
+      enabledFeatures.amdAntiLag.antiLag = VK_TRUE;
     }
     // NV-DXVK end
 
