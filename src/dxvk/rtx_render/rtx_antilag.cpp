@@ -52,10 +52,10 @@ namespace dxvk {
       return;
     }
 
-    updateMode();
-
-    // Mark Anti-Lag as initialized
+    // Mark Anti-Lag as initialized before calling updateMode()
     m_initialized = true;
+
+    updateMode();
 
     Logger::info("AMD Anti-Lag initialized successfully.");
   }
@@ -89,12 +89,17 @@ namespace dxvk {
       return;
     }
 
-    // Update Anti-Lag before input processing
+    // Update Anti-Lag before input processing with explicit INPUT stage
+    VkAntiLagPresentationInfoAMD presentInfo = {};
+    presentInfo.sType = VK_STRUCTURE_TYPE_ANTI_LAG_PRESENTATION_INFO_AMD;
+    presentInfo.stage = VK_ANTI_LAG_STAGE_INPUT_AMD;
+    presentInfo.frameIndex = frameId;
+
     VkAntiLagDataAMD antiLagData = {};
     antiLagData.sType = VK_STRUCTURE_TYPE_ANTI_LAG_DATA_AMD;
     antiLagData.mode = VK_ANTI_LAG_MODE_ON_AMD;
     antiLagData.maxFPS = 0; // No FPS cap
-    antiLagData.pPresentationInfo = nullptr;
+    antiLagData.pPresentationInfo = &presentInfo;
 
     m_vkAntiLagUpdateAMD(m_device->vkd()->device(), &antiLagData);
   }
